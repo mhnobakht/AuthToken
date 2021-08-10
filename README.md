@@ -12,6 +12,7 @@ include_once "AuthToken.php";
 ## Usage
 Generate Token:
 - you can pass the username to this method (`optional`)
+- If you have already created a session called `username`, the `username` will be set automatically and does not need to be set separately.
 ```php
 AuthToken::generate();
 ```

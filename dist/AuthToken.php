@@ -57,6 +57,8 @@ class AuthToken {
             $salt = "54373b6ccb934793475ef0f2ad7580bc6e04bdba";
             if ($username != NULL) {
                 $username = AuthToken::validation($username);
+            }elseif(isset($_SESSION['username']) && $_SESSION['username'] != NULL && !empty($_SESSION['username'])){
+                $username = AuthToken::validation($_SESSION['username']);
             } else {
                 $username = "Null_Username_Set_By_Default";
             }
@@ -80,12 +82,7 @@ class AuthToken {
     public static function check(string $username=NULL) : bool {
         try{
             AuthToken::checkSession();
-            if(isset($_SESSION['AuthToken_Generated']) && $_SESSION['AuthToken_Generated'] != NULL){
-                if ($username != null) {
-                    $username = AuthToken::validation($username);
-                } else {
-                    $username = "Null_Username_Set_By_Default";
-                }
+            if(isset($_SESSION['AuthToken_Generated']) && $_SESSION['AuthToken_Generated'] != NULL && !empty($_SESSION['AuthToken_Generated'])){
                 $token = AuthToken::token($username);
                 if($token === $_SESSION['AuthToken_Generated']) {
                     return true;
