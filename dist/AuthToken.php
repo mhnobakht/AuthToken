@@ -51,14 +51,14 @@ class AuthToken {
     // Make a Token
     public static function token(string $username=NULL) : string {
         try {
-            AuthToken::checkSession();
-            $ip = AuthToken::validation(AuthToken::getIpAddress());
-            $userAgent = AuthToken::validation($_SERVER['HTTP_USER_AGENT']);
+            self::checkSession();
+            $ip = self::validation(self::getIpAddress());
+            $userAgent = self::validation($_SERVER['HTTP_USER_AGENT']);
             $salt = "54373b6ccb934793475ef0f2ad7580bc6e04bdba";
             if ($username != NULL) {
-                $username = AuthToken::validation($username);
+                $username = self::validation($username);
             }elseif(isset($_SESSION['username']) && $_SESSION['username'] != NULL && !empty($_SESSION['username'])){
-                $username = AuthToken::validation($_SESSION['username']);
+                $username = self::validation($_SESSION['username']);
             } else {
                 $username = "Null_Username_Set_By_Default";
             }
@@ -71,7 +71,7 @@ class AuthToken {
     // generate a token and set it to sessions
     public static function generate(string $username=NULL) {
         try {
-            $token = AuthToken::token($username);
+            $token = self::token($username);
             $_SESSION['AuthToken_Generated'] = $token;
             session_write_close();
         }catch(Exception $e) {
@@ -81,9 +81,9 @@ class AuthToken {
     // check the token and return true or false
     public static function check(string $username=NULL) : bool {
         try{
-            AuthToken::checkSession();
+            self::checkSession();
             if(isset($_SESSION['AuthToken_Generated']) && $_SESSION['AuthToken_Generated'] != NULL && !empty($_SESSION['AuthToken_Generated'])){
-                $token = AuthToken::token($username);
+                $token = self::token($username);
                 if($token === $_SESSION['AuthToken_Generated']) {
                     return true;
                 }else{
@@ -99,7 +99,7 @@ class AuthToken {
     // delete the token session
     public static function delete() : void {
         try {
-            AuthToken::checkSession();
+            self::checkSession();
             if(isset($_SESSION['AuthToken_Generated'])) {
                 $_SESSION['AuthToken_Generated'] = NULL;
                 unset($_SESSION['AuthToken_Generated']);
