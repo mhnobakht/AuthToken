@@ -1,11 +1,22 @@
 <?php declare(strict_types=1); // strict mode
 
 class AuthToken {
+    // declare the information
+    private static $domain = 'localhost';
+    private static $salt   = "54373b6ccb934793475ef0f2ad7580bc6e04bdba";
+
+
     // check the session
     public static function checkSession() {
         try {
             if(session_id() == '') {
-                session_start();
+                if(!isset($_SESSION)){  
+                    session_set_cookie_params(0, '/', self::$domain, true, true);
+                    ini_set( 'session.cookie_httponly', '1' );
+                    @session_regenerate_id(true);  
+                    ob_start();  
+                    session_start();
+                }  
             }
         }catch(Exception $e){
             die("You have error in checkSession() --> ".(string)$e);
@@ -54,7 +65,7 @@ class AuthToken {
             self::checkSession();
             $ip = self::validation(self::getIpAddress());
             $userAgent = self::validation($_SERVER['HTTP_USER_AGENT']);
-            $salt = "54373b6ccb934793475ef0f2ad7580bc6e04bdba";
+            $salt = self::$salt;
             if ($username != NULL) {
                 $username = self::validation($username);
             }elseif(isset($_SESSION['username']) && $_SESSION['username'] != NULL && !empty($_SESSION['username'])){
