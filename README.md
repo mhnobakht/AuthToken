@@ -4,7 +4,7 @@ Simple `Authentication Token Manager` System.
 ## Installation
 
 just include `AuthToken.php` into your document.
-and edit $domain and $salt
+and edit `$domain` and `$salt`
 
 ```php
 include_once "AuthToken.php";
