@@ -1,5 +1,7 @@
 <?php declare(strict_types=1); // strict mode
 
+namespace Academy01\Authtoken;
+
 class AuthToken {
     // declare the information
     private static $domain = 'localhost';

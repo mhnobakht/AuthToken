@@ -1,0 +1,21 @@
+{
+    "name": "academy01/auth-token",
+    "description": "authentication manager system for php",
+    "type": "library",
+    "require": {
+        "php": ">=7.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Academy01\\AuthToken\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mhnobakht",
+            "email": "01programmingacademy@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
